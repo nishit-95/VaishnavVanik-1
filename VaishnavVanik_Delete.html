@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vaishnav Vanik Parivar — Account Deletion</title>
+    <!-- Add SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --accent: #1e90ff;
+            --accent-dark: #176dc1;
+            --danger: #e63946;
+            --danger-dark: #b02a37;
+            --muted: #6b7280;
+            --bg: #f0f5ff;
+            --card-bg: #fff;
+            --shadow: 0 8px 32px rgba(30, 144, 255, 0.08);
+            --radius: 16px;
+            --modal-shadow: 0 16px 48px rgba(30, 144, 255, 0.18);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Inter, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #f8fafc 100%);
+            margin: 0;
+            padding: 0;
+            color: #111;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2vh auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 32px;
+            padding: 24px;
+            background: transparent;
+            box-shadow: none;
+            min-height: 96vh;
+        }
+
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .main-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .app-header {
+            text-align: center;
+            padding: 18px 0;
+            margin-bottom: 18px;
+            border-bottom: 1.5px solid #e6e9ee;
+        }
+
+        .app-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent-dark);
+            margin: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 1.35rem;
+            margin: 0 0 6px;
+            color: #222;
+            font-weight: 700;
+        }
+
+        p.lead {
+            color: var(--muted);
+            margin: 6px 0 18px;
+            font-size: 1.08rem;
+        }
+
+        form {
+            display: grid;
+            gap: 18px
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #e6e9ee;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #f8fafc;
+            transition: border 0.18s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px
+        }
+
+        .checkbox input[type="checkbox"] {
+            margin-top: 3px
+        }
+
+        .actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 0;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+            box-shadow: 0 2px 8px rgba(30, 144, 255, 0.04);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--accent-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-danger:hover,
+        .btn-danger:focus {
+            background: var(--danger-dark);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1.5px solid #e6e9ee;
+            color: var(--accent-dark);
+        }
+
+        .btn-ghost:hover,
+        .btn-ghost:focus {
+            background: #f0f6ff;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .important {
+            background: #fff1f0;
+            border: 2px solid #ffd8d3;
+            padding: 20px;
+            border-radius: 12px;
+            color: #7a1f19;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .important::before {
+            content: "⚠️";
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            opacity: 0.5;
+        }
+
+        .list {
+            margin: 8px 0 0;
+            padding-left: 22px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--accent-dark);
+            outline: none;
+            transition: color 0.15s;
+        }
+
+        details[open] summary {
+            color: var(--danger-dark);
+        }
+
+        .support-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.15s;
+        }
+
+        .support-link:hover,
+        .support-link:focus {
+            color: var(--accent-dark);
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        /* Responsive styles */
+        @media (max-width: 968px) {
+            .container {
+                min-height: auto;
+                margin: 20px auto;
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            body {
+                padding: 16px;
+                display: block;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+            .app-title {
+                font-size: 1.8rem;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            p.lead {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                gap: 20px;
+                padding: 12px;
+            }
+            .sidebar,
+            .main-content {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            .app-header {
+                padding: 12px 0;
+                margin-bottom: 12px;
+            }
+            .app-title {
+                font-size: 1.6rem;
+            }
+            .important {
+                padding: 16px;
+            }
+            .important::before {
+                font-size: 20px;
+                right: 16px;
+                top: 16px;
+            }
+            .list {
+                font-size: 13px;
+                padding-left: 18px;
+            }
+            form {
+                gap: 14px;
+            }
+            input[type="text"],
+            input[type="email"],
+            select,
+            textarea {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.95rem;
+            }
+            .modal {
+                max-width: 90%;
+                padding: 20px 16px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 8px;
+            }
+            .container {
+                margin: 10px auto;
+                padding: 8px;
+                gap: 16px;
+            }
+            .sidebar,
+            .main-content {
+                padding: 16px;
+                border-radius: 10px;
+            }
+            .app-title {
+                font-size: 1.3rem;
+            }
+            h1 {
+                font-size: 1rem;
+            }
+            p.lead {
+                font-size: 0.9rem;
+            }
+            .important {
+                padding: 14px;
+                margin: 16px 0;
+            }
+            .list {
+                font-size: 12px;
+            }
+            label {
+                font-size: 13px;
+            }
+            input[type="text"],
+            input[type="email"],
+            select,
+            textarea {
+                padding: 9px;
+                font-size: 13px;
+            }
+            textarea {
+                min-height: 90px;
+            }
+            .checkbox {
+                gap: 8px;
+            }
+            .checkbox label {
+                font-size: 12px;
+            }
+            .btn {
+                width: 100%;
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .modal {
+                max-width: 95%;
+                padding: 18px 14px 14px;
+            }
+            .modal h2 {
+                font-size: 1.1rem;
+            }
+            .modal p {
+                font-size: 0.9rem;
+            }
+            details summary {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .app-title {
+                font-size: 1.1rem;
+            }
+            h1 {
+                font-size: 0.95rem;
+            }
+            .important {
+                padding: 12px;
+            }
+            .important::before {
+                font-size: 18px;
+            }
+            .btn {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Landscape phone orientation */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                display: block;
+                align-items: flex-start;
+            }
+            .container {
+                min-height: auto;
+                margin: 10px auto;
+            }
+            .sidebar {
+                position: relative;
+            }
+        }
+
+        /* modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 144, 255, 0.18);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: background 0.2s;
+        }
+
+        .modal {
+            background: #fff;
+            padding: 28px 22px 20px 22px;
+            border-radius: 18px;
+            max-width: 420px;
+            width: 96%;
+            box-shadow: var(--modal-shadow);
+            border: 2px solid #e6e9ee;
+            animation: modalIn 0.22s cubic-bezier(.4, 1.4, .6, 1) both;
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: translateY(40px) scale(0.97);
+                opacity: 0;
+            }
+            to {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        .modal.show {
+            display: flex
+        }
+
+        .note {
+            font-size: 13px;
+            color: #374151
+        }
+
+        /* transitions for interactive elements */
+        button,
+        input,
+        select,
+        textarea,
+        details summary {
+            transition: background 0.15s, color 0.15s, border 0.15s;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container" role="main">
+        <div class="sidebar">
+            <div class="app-header">
+                <span class="app-title">Vaishnav Vanik Parivar</span>
+            </div>
+            <header>
+                <h1>Account Deletion</h1>
+                <p class="lead">If you wish to delete your Parivar profile, please complete the form below.</p>
+            </header>
+
+            <div class="important" role="region" aria-live="polite">
+                <strong>Important Notice</strong>
+                <p class="note">This action is permanent and cannot be undone. Once deleted, all your profile data will be permanently removed including:</p>
+                <ul class="list">
+                    <li>Your Parivar profile and photos</li>
+                    <li>All match preferences and interests</li>
+                    <li>Identity and community verification documents</li>
+                    <li>Chat history and contact details</li>
+                    <li>Horoscope and family details</li>
+                    <li>All saved profiles and shortlists</li>
+                </ul>
+            </div>
+
+            <details style="margin-top:24px;" id="alternatives">
+                <summary>Before you proceed — Consider these alternatives</summary>
+                <ul class="list">
+                    <li><strong>Hide your profile:</strong> Temporarily hide from search results.</li>
+                    <li><strong>Update preferences:</strong> Modify your match preferences.</li>
+                    <li><strong>Adjust privacy:</strong> Control who can view your profile.</li>
+                    <li><strong>Contact support:</strong> Our relationship managers can help.</li>
+                </ul>
+            </details>
+        </div>
+
+        <div class="main-content">
+            <form id="deletionForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required
+                        aria-required="true">
+                    <p id="emailHelp" class="small">We'll send a confirmation email to this address.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Reason for Leaving <span class="small muted">(optional)</span></label>
+                    <select id="reason" name="reason">
+                        <option value="">-- Select a reason --</option>
+                        <option>Found match through VaishnavVanik</option>
+                        <option>Found match elsewhere</option>
+                        <option>Not getting suitable matches</option>
+                        <option>Creating new profile</option>
+                        <option>Privacy concerns</option>
+                        <option>Other reason</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback">Feedback <span class="small muted">(optional)</span></label>
+                    <textarea id="feedback" name="feedback"
+                        placeholder="Tell us what went wrong or how we can improve..."></textarea>
+                </div>
+
+                <div class="checkbox">
+                    <input id="confirmPermanent" name="confirmPermanent" type="checkbox" aria-required="true">
+                    <label for="confirmPermanent">I understand that this action is permanent and cannot be undone. All
+                        my data will be deleted according to the data retention policy.</label>
+                </div>
+
+                <div class="checkbox">
+                    <input id="confirmEmail" name="confirmEmail" type="checkbox">
+                    <label for="confirmEmail">Yes, I want to receive a confirmation email about my account deletion
+                        request.</label>
+                </div>
+
+                <div class="actions">
+                    <button type="button" id="deleteBtn" class="btn btn-danger">Delete My Account</button>
+                </div>
+            </form>
+
+            <footer style="margin-top:24px; text-align: center;">
+                <p class="small muted">Need help? Email <a
+                        href="mailto:info@itfuturz.com">info@itfuturz.com</a></p>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Confirmation modal -->
+    <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal" role="document">
+            <h2 id="modalTitle">Confirm Account Deletion</h2>
+            <p id="modalBody">Are you sure you want to permanently delete your account? This cannot be undone.</p>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px;">
+                <button id="cancelModal" class="btn btn-ghost">Cancel</button>
+                <button id="confirmModal" class="btn btn-danger">Yes, Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const email = document.getElementById('email');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const confirmPermanent = document.getElementById('confirmPermanent');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const cancelModal = document.getElementById('cancelModal');
+        const confirmModal = document.getElementById('confirmModal');
+        const form = document.getElementById('deletionForm');
+
+        function showModal() {
+            modalBackdrop.style.display = 'flex';
+            modalBackdrop.setAttribute('aria-hidden', 'false');
+        }
+        function hideModal() {
+            modalBackdrop.style.display = 'none';
+            modalBackdrop.setAttribute('aria-hidden', 'true');
+        }
+
+        deleteBtn.addEventListener('click', () => {
+            // basic validation
+            if (!email.value) {
+                Swal.fire({
+                    title: 'Email Required',
+                    text: 'Please enter your email address.',
+                    icon: 'warning',
+                    confirmButtonColor: '#1e90ff'
+                });
+                email.focus();
+                return;
+            }
+            if (!confirmPermanent.checked) {
+                Swal.fire({
+                    title: 'Confirmation Required',
+                    text: 'Please confirm that you understand this action is permanent.',
+                    icon: 'warning',
+                    confirmButtonColor: '#1e90ff'
+                });
+                return;
+            }
+            showModal();
+        });
+
+        cancelModal.addEventListener('click', hideModal);
+
+        confirmModal.addEventListener('click', async () => {
+            hideModal();
+            
+            // Show loading state
+            Swal.fire({
+                title: 'Processing...',
+                text: 'Please wait while we process your request.',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            try {
+                await new Promise(r => setTimeout(r, 800));
+                
+                Swal.fire({
+                    title: 'Request Submitted',
+                    text: 'Your account deletion request has been submitted.',
+                    icon: 'success',
+                    confirmButtonColor: '#1e90ff'
+                });
+                form.reset();
+            } catch (err) {
+                console.error(err);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again or contact support.',
+                    icon: 'error',
+                    confirmButtonColor: '#1e90ff'
+                });
+            }
+        });
+
+        // Accessibility: close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') hideModal();
+        });
+    </script>
+</body>
+
+</html>

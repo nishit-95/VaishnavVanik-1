@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Center - Vaishnav Vanik Parivar</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #06b6d4;
+            --bg-light: #f8fafc;
+            --bg-section: #f1f5f9;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-light);
+        }
+
+        /* Navbar Enhancements */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.98) !important;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.04);
+            transition: box-shadow 0.2s;
+        }
+        .navbar .navbar-brand i {
+            font-size: 1.5rem;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+        }
+        
+        /* Navbar modifications after logo removal */
+        .navbar-brand {
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            color: var(--primary-color) !important;
+            padding: 0.5rem 0;
+        }
+
+        /* Hero Section with background image and overlay */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(37,99,235,0.92) 0%, rgba(6,182,212,0.92) 100%), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            color: white;
+            padding: 80px 0 70px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 8px 32px rgba(37,99,235,0.10);
+            position: relative;
+        }
+        .hero-section h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.97;
+            font-weight: 400;
+        }
+
+        /* Section backgrounds */
+        section.container {
+            background: var(--bg-section);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(30,41,59,0.04);
+            padding: 36px 24px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+        }
+
+        /* Accordion Enhancements */
+        .accordion-button:not(.collapsed) {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+        }
+        .accordion-button {
+            transition: background 0.2s, color 0.2s;
+        }
+        .accordion-button:hover {
+            background: #f0f9ff;
+            color: var(--secondary-color);
+        }
+        .accordion-item {
+            border-radius: 12px !important;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.04);
+        }
+
+        /* Contact Card Enhancements */
+        .contact-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px 20px;  /* Reduced padding due to button removal */
+            text-align: center;
+            transition: box-shadow 0.3s, transform 0.3s, border-color 0.2s;
+            height: 100%;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.04);
+        }
+        .contact-card:hover {
+            box-shadow: 0 12px 32px rgba(37,99,235,0.10);
+            transform: translateY(-6px) scale(1.02);
+            border-color: var(--primary-color);
+        }
+        .contact-card i {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 18px;
+            transition: color 0.2s;
+        }
+        .contact-card:hover i {
+            color: var(--secondary-color);
+        }
+        .contact-card h4 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .contact-card p.text-muted {
+            margin-bottom: 0;  /* Remove bottom margin since there's no button */
+        }
+
+        /* Support Hours Card */
+        .support-hours-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.04);
+        }
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+        .hours-day {
+            font-weight: 600;
+            color: #334155;
+        }
+        .hours-time {
+            color: #64748b;
+        }
+        .badge-status {
+            background-color: #10b981;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.93rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.08);
+        }
+
+        /* Alerts */
+        .alert-primary {
+            background: linear-gradient(90deg, #e0e7ff 0%, #f0f9ff 100%);
+            border: none;
+            color: #2563eb;
+            font-weight: 500;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+        }
+        .alert-info {
+            border-radius: 12px;
+        }
+
+        /* Footer Enhancements */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 36px 0 24px 0;
+            margin-top: 60px;
+            border-radius: 32px 32px 0 0;
+            box-shadow: 0 -2px 16px rgba(30,41,59,0.08);
+        }
+        footer h5 {
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        footer h6 {
+            font-weight: 700;
+        }
+        footer .fs-4 {
+            transition: color 0.2s;
+        }
+        footer .fs-4:hover {
+            color: var(--secondary-color) !important;
+        }
+        footer a.text-white-50:hover {
+            color: #fff !important;
+            text-decoration: underline;
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 992px) {
+            section.container {
+                padding: 24px 8px;
+            }
+            .row.g-4 > [class^="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .contact-card {
+                margin-bottom: 20px;
+                padding: 24px 10px;
+            }
+            .support-hours-card {
+                padding: 20px 8px;
+            }
+            section.container {
+                padding: 16px 2px;
+            }
+            .row {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero-section {
+                border-radius: 0 0 18px 18px;
+                padding: 36px 0 24px 0;
+            }
+            section.container {
+                border-radius: 10px;
+                margin-bottom: 24px;
+                padding: 8px 1px;
+            }
+            .contact-card {
+                padding: 16px 4px;
+            }
+            .support-hours-card {
+                padding: 12px 2px;
+            }
+            footer {
+                border-radius: 18px 18px 0 0;
+                padding: 16px 0 8px 0;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .contact-card h4 {
+                font-size: 1.1rem;
+            }
+            .contact-card i {
+                font-size: 2.2rem;
+            }
+            .support-hours-card h4 {
+                font-size: 1rem;
+            }
+            .hours-item {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Adjust header after logo removal */
+        .app-header {
+            text-align: center;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Vaishnav Vanik Parivar</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1>Matrimony Support</h1>
+            <p>We're here to help you find your perfect match</p>
+        </div>
+    </section>
+
+    <!-- Get Help Quickly Section -->
+    <section class="container mb-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title">Get Help Quickly</h2>
+            <p class="text-muted">Find answers about profiles, matches, and membership</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-person-heart"></i>
+                    <h4>Profile Guide</h4>
+                    <p class="text-muted">Create and manage your matrimony profile</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-shield-check"></i>
+                    <h4>Privacy Help</h4>
+                    <p class="text-muted">Manage your privacy and preferences</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-star"></i>
+                    <h4>Premium Features</h4>
+                    <p class="text-muted">Learn about membership benefits</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container mb-5" id="faq">
+        <h2 class="section-title text-center">Common Questions</h2>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <!-- FAQ 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I create a perfect profile?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Complete all sections including family details, education, career, and preferences. Add recent photos and verify your profile for better visibility and responses.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How are matches suggested?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Our matching system considers your preferences, family background, education, career, and lifestyle choices to suggest compatible matches within the Vaishnav Vanik Parivar community.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How can I verify my profile?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Submit your identity proof and community certificates. Our team verifies documents and confirms community membership for authentic profiles.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                What privacy options are available?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Control who sees your photos, contact details, and full profile. Set preferences for who can contact you and manage your visibility settings.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                What are premium membership benefits?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Premium members get priority listing, advanced search filters, direct contact options, and dedicated relationship manager support for their matrimony journey.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Hours Section -->
+    <section class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="section-title text-center">Support Hours</h2>
+                
+                <div class="support-hours-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0">We're Here to Help</h4>
+                        <span class="badge-status">
+                            <i class="bi bi-circle-fill me-1"></i> Currently Open
+                        </span>
+                    </div>
+                    
+                    <div class="hours-item">
+                        <span class="hours-day">Monday - Friday</span>
+                        <span class="hours-time">8:00 AM - 10:00 PM IST</span>
+                    </div>
+                    <div class="hours-item">
+                        <span class="hours-day">Saturday</span>
+                        <span class="hours-time">9:00 AM - 8:00 PM IST</span>
+                    </div>
+                    <div class="hours-item">
+                        <span class="hours-day">Sunday</span>
+                        <span class="hours-time">10:00 AM - 6:00 PM IST</span>
+                    </div>
+                    <div class="hours-item">
+                        <span class="hours-day">Holidays</span>
+                        <span class="hours-time">Limited Hours (10:00 AM - 4:00 PM IST)</span>
+                    </div>
+                    
+                    <div class="alert alert-info mt-4 mb-0">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <strong>After Hours?</strong> Leave us a message and we'll respond within 24 hours.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Options Section -->
+    <section class="container mb-5">
+        <h2 class="section-title text-center">Contact Options</h2>
+        <p class="text-center text-muted mb-4">Choose the contact method that works best for you:</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-envelope-fill"></i>
+                    <h4>Email Support</h4>
+                    <p class="fw-bold text-primary mb-1">info@itfuturz.com</p>
+                    <small class="text-muted">Response time: Within 24 hours</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-telephone-fill"></i>
+                    <h4>Phone Support</h4>
+                    <p class="fw-bold text-primary mb-1">+91 9879208321</p>
+                    <small class="text-muted">Available during support hours</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <h4>Office Address</h4>
+                    <p class="fw-bold text-primary mb-1" style="font-size:1rem;">
+                        Raghuvir Symphony Shoppers,<br>
+                        310-311, Bhimrad-Althan Rd,<br>
+                        Surat, Gujarat 395007
+                    </p>
+                    <small class="text-muted">Visit us during office hours</small>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-8 mx-auto">
+                <div class="alert alert-primary text-center">
+                    <i class="bi bi-headset fs-4 me-2"></i>
+                    <strong>Priority Support Available!</strong> Upgrade to Premium for 24/7 support and faster response times.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Vaishnav Vanik Parivar</h5>
+                    <p class="text-white-50 mt-3">Trusted matchmaking for the Vaishnav Vanik Parivar community</p>
+                </div>
+            </div>
+            <hr class="border-white-50 my-4">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; 2025 Vaishnav Vanik Parivar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>
